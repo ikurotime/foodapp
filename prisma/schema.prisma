@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+model Tipo {
+  id   Int    @id @default(autoincrement())
+  tipo String
+  Comentario Comentario[]
+}
+model User {
+  id         Int          @id @default(autoincrement())
+  username   String       @unique
+  recetaId   Int?
+  Comentario Comentario[]
+  Recetas    Recetas[]
+}
+
+model Comentario {
+  id       Int      @id @default(autoincrement())
+  texto    String
+  userId   Int?
+  tipoId  Int?
+  tipo    Tipo?    @relation(fields: [tipoId], references: [id])
+  user     User?    @relation(fields: [userId], references: [id])
+  recetaId Int?
+  receta   Recetas? @relation(fields: [recetaId], references: [id])
+  @@index([userId])
+  @@index([recetaId])
+  @@index([tipoId])
+}
+
+model Recetas {
+  id                Int          @id @default(autoincrement())
+  nombre            String
+  descripcion       String
+  ingredientes      String
+  tiempoPreparacion Int
+  userId            Int?
+  alergenos         String
+  user              User?        @relation(fields: [userId], references: [id])
+  comentarios       Comentario[]
+  @@index([userId])
+}
