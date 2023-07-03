@@ -2,7 +2,7 @@ import { SignUp } from '@clerk/nextjs'
 
 export default function Page() {
   return (
-    <div className='flex margin-auto justify-center items-center min-h-screen'>
+    <div className='flex margin-auto justify-center items-center min-h-[90vh]'>
       <div className='flex w-full max-w-4xl'>
         <div className='flex flex-row-reverse h-full w-auto m-auto md:w-full shadow-lg bg-orange-300 rounded-2xl md:bg-login-background bg-contain bg-no-repeat'>
           <SignUp
