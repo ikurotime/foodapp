@@ -7,9 +7,25 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
   --bg-color: #fff9f4;
+  --dark-acccent: #f5f5f5;
+  --light-shades: #fff;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: var(--bg-color);
+  background-color: #fff9f4;
+  opacity: 1;
+  background-image: radial-gradient(#f5ad5d 2px, transparent 2px),
+    radial-gradient(#f5ad5d 2px, #fff9f4 2px);
+  background-size: 80px 80px;
+  background-position: 0 0, 40px 40px;
+}
+
+div[class^='cl-footer'] + div {
+  display: none;
+}
+
+div[class^='cl-card'] {
+  margin: 0;
+  box-shadow: none;
 }
