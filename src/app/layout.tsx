@@ -1,10 +1,11 @@
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider, SignedIn, SignedOut } from '@clerk/nextjs'
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Just_Another_Hand } from 'next/font/google'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-
-const inter = Inter({ subsets: ['latin'] })
+import LandingPage from '@/components/LandingPage'
+import { useRouter } from 'next/navigation'
+const inter = Just_Another_Hand({ weight: '400', subsets: ['latin'] })
 
 export const metadata = {
   title: 'RecetasYa!',
