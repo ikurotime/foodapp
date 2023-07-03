@@ -25,7 +25,30 @@ div[class^='cl-footer'] + div {
   display: none;
 }
 
-div[class^='cl-card'] {
+div.cl-card {
   margin: 0;
   box-shadow: none;
+}
+
+h1.cl-headerTitle {
+  font-size: 46px;
+}
+
+p.cl-headerSubtitle {
+  font-size: 26px;
+}
+label.cl-formFieldLabel {
+  font-size: 24px;
+}
+input.cl-formFieldInput {
+  font-size: 24px;
+}
+button.cl-formButtonPrimary {
+  font-size: 18px;
+}
+span.cl-footerActionText,
+a.cl-footerActionLink,
+p.cl-formFieldSuccessText,
+p.cl-formFieldErrorText {
+  font-size: 20px;
 }
