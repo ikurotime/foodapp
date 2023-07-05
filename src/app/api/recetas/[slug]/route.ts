@@ -7,10 +7,10 @@ export async function GET(
 ) {
   const prisma = new PrismaClient()
   const slug = params.slug
-  console.log(slug)
   if (slug === 'all') {
-    const recetas = await prisma.recetas.findMany()
-
+    const recetas = await prisma.recetas.findMany({
+      include: { user: true, _count: { select: { Likes: true } } }
+    })
     return NextResponse.json(recetas)
   }
   return new Response(`Hello ${slug}!`)
