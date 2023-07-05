@@ -49,6 +49,7 @@ model Recetas {
   tiempoPreparacion Int
   userId            Int?
   alergenos         String
+  portraitImage     String  @default("https://img.icons8.com/?size=512&id=0Om9QRgFH4ZX&format=png")
   user              User?        @relation(fields: [userId], references: [id])
   comentarios       Comentario[]
   Likes             Likes[]
