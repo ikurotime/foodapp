@@ -1,17 +1,17 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { getAllRecipes } from '@/app/dashboard/recetas/[slug]/page'
+import Image from 'next/image';
+import Link from 'next/link';
+import { getAllRecipes } from '@/app/dashboard/recetas/[slug]/page';
 
-type Props = { recipe: Awaited<ReturnType<typeof getAllRecipes>>[0] }
+type Props = { recipe: Awaited<ReturnType<typeof getAllRecipes>>[0] };
 
 export default function Recipe({ recipe }: Props) {
   return (
     <Link
       href={`/dashboard/recetas/${recipe.id}`}
-      className='flex items-center text-3xl border rounded-md bg-cream min-w-[350px] p-5 min-h-[150px]'
+      className='flex min-h-[150px] min-w-[350px] items-center rounded-md border bg-cream p-5 text-3xl'
     >
-      <div className='flex flex-row margin-auto w-full'>
-        <div className=' flex justify-center items-center min-w-[30%]'>
+      <div className='margin-auto flex w-full flex-row'>
+        <div className=' flex min-w-[30%] items-center justify-center'>
           <Image
             width={70}
             height={70}
@@ -19,7 +19,7 @@ export default function Recipe({ recipe }: Props) {
             alt='imagen de comida'
           />
         </div>
-        <div className='flex-1 items-start flex flex-col margin-auto w-full'>
+        <div className='margin-auto flex w-full flex-1 flex-col items-start'>
           <div className='flex gap-2'>
             <h2>{recipe.nombre}</h2>
             <p className='text-[#A5A5A5]'>@{recipe.user?.username}</p>
@@ -35,5 +35,5 @@ export default function Recipe({ recipe }: Props) {
         </div>
       </div>
     </Link>
-  )
+  );
 }

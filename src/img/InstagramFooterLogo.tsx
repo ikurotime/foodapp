@@ -20,5 +20,5 @@ const SvgComponent = () => (
       d='m44.445 11.358.032-.036'
     />
   </svg>
-)
-export default SvgComponent
+);
+export default SvgComponent;

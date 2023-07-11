@@ -3,7 +3,7 @@ module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}'
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -11,12 +11,12 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'login-background': 'url("/food_login.png")'
+        'login-background': 'url("/food_login.png")',
       },
       colors: {
-        cream: '#EFE4DA'
-      }
-    }
+        cream: '#EFE4DA',
+      },
+    },
   },
-  plugins: []
-}
+  plugins: [require('@tailwindcss/typography')],
+};
