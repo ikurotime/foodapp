@@ -20,7 +20,7 @@ export async function POST(request: Request) {
         username: user.data.id,
       },
     });
-    return NextResponse.json({ message: 'ok' });
     //return NextResponse.redirect(`/recetas/${receta.id}`) TODO: redirect to receta
   }
+  return NextResponse.json({ message: 'ok' });
 }
