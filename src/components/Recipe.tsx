@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getAllRecipes } from '@/app/dashboard/recetas/[slug]/page';
+import { getAllRecipes } from '@/utils';
 
 type Props = { recipe: Awaited<ReturnType<typeof getAllRecipes>>[0] };
 
