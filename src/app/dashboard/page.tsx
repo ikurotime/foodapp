@@ -1,5 +1,6 @@
 import Recipe from '@/components/Recipe';
 import { prisma } from '@/prismaClient';
+import Link from 'next/link';
 
 async function getRecipes() {
   const recetas = await prisma.recetas.findMany({
@@ -13,6 +14,7 @@ export default async function Dashboard() {
   return (
     <div className='flex min-h-screen flex-col items-center justify-center py-2'>
       <main className='grid grid-cols-2 items-center justify-center gap-5 px-20 text-center'>
+        <Link href='/dashboard/recetas/new'>Crear Receta</Link>
         {data.map((recipe: any) => {
           return <Recipe key={recipe.id} recipe={recipe} />;
         })}

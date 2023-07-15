@@ -14,7 +14,8 @@ export async function POST(request: Request) {
         clerkId: user.data.id,
       },
     });
-  } else if (user.type === 'user.deleted') {
+  }
+  if (user.type === 'user.deleted') {
     await prisma.user.delete({
       where: {
         clerkId: user.data.id,
@@ -22,5 +23,5 @@ export async function POST(request: Request) {
     });
     //return NextResponse.redirect(`/recetas/${receta.id}`) TODO: redirect to receta
   }
-  return NextResponse.json({ message: 'ok' });
+  return NextResponse.json({ message: 'ok' }, { status: 200 });
 }
