@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   } else if (user.type === 'user.deleted') {
     await prisma.user.delete({
       where: {
-        clerkId: user.data.id,
+        username: user.data.id,
       },
     });
     return NextResponse.json({ message: 'ok' });
