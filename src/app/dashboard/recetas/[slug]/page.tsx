@@ -1,5 +1,6 @@
 import Recipe from '@/components/Recipe';
 import { prisma } from '@/prismaClient';
+import { getAllRecipes } from '@/utils';
 import MarkdownIt from 'markdown-it';
 
 async function getData({ id }: { id: number }) {
@@ -12,19 +13,6 @@ async function getData({ id }: { id: number }) {
       comentarios: { select: { id: true, texto: true, user: true } },
       _count: { select: { Likes: true } },
     },
-  });
-  return data;
-}
-
-export async function getAllRecipes({ id }: { id: number }) {
-  const data = await prisma.recetas.findMany({
-    include: { user: true, _count: { select: { Likes: true } } },
-    where: {
-      NOT: {
-        id,
-      },
-    },
-    take: 3,
   });
   return data;
 }
