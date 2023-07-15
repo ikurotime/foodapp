@@ -7,9 +7,9 @@ import YoutubeFooterLogo from '@/img/YoutubeFooterLogo';
 
 export default function Footer() {
   return (
-    <div className='flex h-80 w-full flex-col items-center justify-center gap-12 bg-[#332C45] p-10'>
+    <div className=' flex w-full flex-col items-center justify-center gap-6 bg-[#332C45] p-10'>
       <FooterLogo />
-      <div className='flex gap-24'>
+      <div className='flex scale-50 items-center gap-24'>
         <DiscordFooterLogo />
         <GithubFooterLogo />
         <TwitterFooterLogo />

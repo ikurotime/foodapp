@@ -19,6 +19,7 @@ model Tipo {
 
 model User {
   id         Int          @id @default(autoincrement())
+  clerkId    String       @unique
   username   String       @unique
   recetaId   Int?
   Comentario Comentario[]
