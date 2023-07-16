@@ -8,7 +8,7 @@ export default function Recipe({ recipe }: Props) {
   return (
     <Link
       href={`/dashboard/recetas/${recipe.id}`}
-      className='flex min-h-[150px] min-w-[350px] items-center rounded-md border bg-cream p-5 text-3xl'
+      className='flex min-h-[150px] min-w-[350px] items-center rounded-md border bg-cream p-5 text-xl'
     >
       <div className='margin-auto flex w-full flex-row'>
         <div className=' flex min-w-[30%] items-center justify-center'>

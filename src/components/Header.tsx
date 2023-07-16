@@ -6,12 +6,13 @@ import Link from 'next/link';
 export default function Header() {
   const { isSignedIn } = useUser();
   return (
-    <nav className='mx-auto mt-8 flex w-full max-w-[1000px] items-center justify-between'>
-      {' '}
-      <Link href={isSignedIn ? '/dashboard' : '/'}>
-        <HeaderLogo />
-      </Link>
-      <UserButton afterSignOutUrl='/' />
+    <nav className='m-auto flex h-24 w-full max-w-6xl items-center justify-between p-8'>
+      <div className='flex w-full justify-between'>
+        <Link href={isSignedIn ? '/dashboard' : '/'}>
+          <HeaderLogo />
+        </Link>
+        <UserButton afterSignOutUrl='/' />
+      </div>
     </nav>
   );
 }
