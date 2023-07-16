@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function LandingPage() {
   return (
     <div className='m-auto flex min-h-screen  flex-col items-center '>
-      <section className='flex  items-center py-8 md:py-24 '>
+      <section className='flex h-[90vh] items-start justify-start py-8 '>
         <div className='flex max-w-6xl flex-col-reverse items-center md:flex-row'>
           <div className='flex items-center gap-8 px-10 text-center md:flex-row md:text-left'>
             <div className='flex flex-col gap-5'>
@@ -34,7 +34,7 @@ export default function LandingPage() {
           />
         </div>
         <svg
-          className='absolute -bottom-10 left-0 -z-10'
+          className='absolute -bottom-0 left-0 -z-10'
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 1440 320'
         >
