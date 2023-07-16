@@ -25,12 +25,11 @@ export default function Recipe({ recipe }: Props) {
             <p className='text-[#A5A5A5]'>@{recipe.user?.username}</p>
           </div>
           <span>{recipe.descripcion}</span>
-          <div className='flex justify-between text-2xl'>
-            <span>Min:{recipe.tiempoPreparacion}</span>
-            <div>
-              <span className='text-base'>❤️:</span>
-              <span> {recipe._count.Likes}</span>
-            </div>
+          <div className='flex justify-between gap-3 text-2xl'>
+            <span>🕓:{recipe.tiempoPreparacion}</span>
+            <span> ❤️:{recipe._count.Likes}</span>
+
+            <span>💬{recipe._count.comentarios}</span>
           </div>
         </div>
       </div>

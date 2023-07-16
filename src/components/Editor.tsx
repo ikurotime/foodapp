@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import MonacoEditor from '@monaco-editor/react';
 import { defaultValue } from './defaultMd';

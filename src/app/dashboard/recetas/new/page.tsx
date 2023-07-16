@@ -1,33 +1,44 @@
 import Editor from '@/components/Editor';
 import { prisma } from '@/prismaClient';
 import { currentUser, useAuth } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
+import { NextResponse } from 'next/server';
 export default function page() {
   async function addRecipe(data: any) {
     'use server';
-    const user = await currentUser();
     const newData = Object.fromEntries(data.entries());
-    const nuevaReceta = await prisma.recetas.create({
+    const newRecipe = await prisma.recetas.create({
       data: {
-        userId: user!.id,
         alergenos: newData.alergenos,
-        descripcion: newData.editor,
+        descripcion: newData.descripcion,
+        content: newData.editor,
         ingredientes: newData.ingredientes,
         nombre: newData.Titulo,
         tiempoPreparacion: Number(newData.tiempoPreparacion),
       },
     });
-    return nuevaReceta;
+    redirect(`/dashboard/recetas/${newRecipe.id}`);
   }
 
   return (
-    <div className='flex min-h-screen flex-col'>
-      <div className='m-auto flex h-[90vh] rounded-lg bg-white p-8'>
-        <form action={addRecipe} className='flex w-full flex-col gap-3'>
+    <div className='flex min-h-screen w-full  flex-col'>
+      <div className='m-auto flex h-[90vh] w-full max-w-6xl rounded-lg bg-white p-8'>
+        <form
+          action={addRecipe as unknown as string}
+          className='flex w-full flex-col gap-3'
+        >
           <label>Titulo de la receta</label>
           <input
             placeholder='Mi deliciosa receta'
             className='rounded-md border-2 border-black  p-3'
             name='Titulo'
+            type='text'
+          />
+          <label>Descripción</label>
+          <input
+            placeholder='Esta receta es de mis favoritas....'
+            className='rounded-md border-2 border-black  p-3'
+            name='descripcion'
             type='text'
           />
           <label>Contenido</label>

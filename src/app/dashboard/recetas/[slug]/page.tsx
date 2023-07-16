@@ -1,55 +1,51 @@
+import CommentSection from '@/components/CommentSection';
 import Recipe from '@/components/Recipe';
 import { prisma } from '@/prismaClient';
-import { getAllRecipes } from '@/utils';
+import { getAllRecipes, getRecipeDataAndComments } from '@/utils';
+import { currentUser } from '@clerk/nextjs';
 import MarkdownIt from 'markdown-it';
 
-async function getData({ id }: { id: number }) {
-  const data = await prisma.recetas.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      user: true,
-      comentarios: { select: { id: true, texto: true, user: true } },
-      _count: { select: { Likes: true } },
-    },
-  });
-  return data;
-}
-
 export default async function Page({ params }: { params: { slug: string } }) {
-  const data = await getData({ id: parseInt(params.slug) });
-  const allData = await getAllRecipes({ id: parseInt(params.slug) });
+  const recipeId = Number(params.slug);
+  const data = await getRecipeDataAndComments({ id: recipeId });
+  const allData = await getAllRecipes({ id: recipeId });
   const md = new MarkdownIt();
-  const result = md.render(
-    '![ikuro](https://static-cdn.jtvnw.net/jtv_user_pictures/d2b75368-cf25-44ee-adfd-80f65b2da69b-profile_image-300x300.png)'
-  );
-  console.log(result);
+  const user = await currentUser();
+  async function handleLike() {
+    await prisma.likes.create({
+      data: {
+        recetaId: recipeId,
+        userId: user?.id,
+      },
+    });
+  }
   return (
     <div className='flex min-h-screen items-center justify-center gap-3'>
-      <div className='flex max-w-xl flex-1 flex-col gap-5'>
-        <div className='max-w-xl flex-1 rounded-md bg-cream p-5'>
-          <div className='flex gap-3 text-4xl'>
-            <span>{data?.nombre}</span>
-            <span className='text-gray-500'>@{data?.user?.username}</span>
-            <span>❤️: {data?._count.Likes}</span>
-          </div>
-          <span className='text-3xl'>{data?.descripcion}</span>
-          <div dangerouslySetInnerHTML={{ __html: result }}></div>
-        </div>
-        <div className='flex gap-3 text-2xl'>
-          {data?.comentarios?.map((item) => (
-            <div
-              key={item.id}
-              className='flex gap-3 rounded-md border border-zinc-700 bg-cream px-2'
-            >
-              <span>{item?.user?.username}</span>
-              <span>{item?.texto}</span>
-            </div>
-          ))}
-        </div>
+      <div className='sticky top-24 flex flex-col gap-5 self-start'>
+        <span>❤️: {data?._count.Likes}</span>
+        <span>💬: {data?._count.comentarios}</span>
       </div>
-      <div>
+
+      <div className='flex max-w-xl flex-1 flex-col gap-5 self-start'>
+        <div className='max-w-xl flex-1 rounded-md bg-cream p-5'>
+          <div className='flex gap-3 text-xl'>
+            <span className='text-gray-500'>@{data?.user?.username}</span>
+          </div>
+          <div className='flex flex-col'>
+            <span className='text-4xl'>{data?.nombre}</span>
+            <span className='text-base '>{data?.descripcion}</span>
+          </div>
+          <br />
+          <div
+            className='prose'
+            dangerouslySetInnerHTML={{
+              __html: md.render(data?.content || ''),
+            }}
+          ></div>
+        </div>
+        <CommentSection post={data} recipeId={recipeId} />
+      </div>
+      <div className='sticky top-24  self-start'>
         <span className='text-4xl'>Top comidas populares</span>
         <div className='grid grid-rows-3 gap-4'>
           {allData?.map((item) => (

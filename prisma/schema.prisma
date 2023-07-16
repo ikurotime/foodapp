@@ -18,7 +18,7 @@ model Tipo {
 }
 
 model User {
-  id         String       @id 
+  id         String       @id
   username   String       @unique
   recetaId   Int?
   Comentario Comentario[]
@@ -27,14 +27,15 @@ model User {
 }
 
 model Comentario {
-  id       Int      @id @default(autoincrement())
-  texto    String
-  userId   String?
-  tipoId   Int?
-  tipo     Tipo?    @relation(fields: [tipoId], references: [id])
-  user     User?    @relation(fields: [userId], references: [id])
-  recetaId Int?
-  receta   Recetas? @relation(fields: [recetaId], references: [id])
+  id         Int      @id @default(autoincrement())
+  texto      String
+  userId     String?
+  tipoId     Int?
+  created_at DateTime @default(now())
+  tipo       Tipo?    @relation(fields: [tipoId], references: [id])
+  user       User?    @relation(fields: [userId], references: [id])
+  recetaId   Int?
+  receta     Recetas? @relation(fields: [recetaId], references: [id])
 
   @@index([userId])
   @@index([recetaId])
@@ -44,12 +45,13 @@ model Comentario {
 model Recetas {
   id                Int          @id @default(autoincrement())
   nombre            String
-  descripcion       String
+  descripcion       String       @db.Text
+  content           String       @db.Text
   ingredientes      String
   tiempoPreparacion Int
   userId            String?
   alergenos         String
-  portraitImage     String  @default("https://img.icons8.com/?size=512&id=0Om9QRgFH4ZX&format=png")
+  portraitImage     String       @default("https://img.icons8.com/?size=512&id=0Om9QRgFH4ZX&format=png")
   user              User?        @relation(fields: [userId], references: [id])
   comentarios       Comentario[]
   Likes             Likes[]
