@@ -9,6 +9,7 @@ export default function page() {
     const newData = Object.fromEntries(data.entries());
     const newRecipe = await prisma.recetas.create({
       data: {
+        userId: (await currentUser())?.id,
         alergenos: newData.alergenos,
         descripcion: newData.descripcion,
         content: newData.editor,
