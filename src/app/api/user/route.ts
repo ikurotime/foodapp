@@ -10,18 +10,18 @@ export async function POST(request: Request) {
   if (user.type === 'user.created') {
     await prisma.user.create({
       data: {
-        username: (user.data.username || user.data.first_name) ?? 'user',
-        clerkId: user.data.id,
+        username:
+          (user.data.username || user.data.first_name) ?? 'user' + user.data.id,
+        id: user.data.id,
       },
     });
   }
   if (user.type === 'user.deleted') {
     await prisma.user.delete({
       where: {
-        clerkId: user.data.id,
+        id: user.data.id,
       },
     });
-    //return NextResponse.redirect(`/recetas/${receta.id}`) TODO: redirect to receta
   }
   return NextResponse.json({ message: 'ok' }, { status: 200 });
 }

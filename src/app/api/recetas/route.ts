@@ -1,8 +1,8 @@
+import { prisma } from '@/prismaClient';
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const prisma = new PrismaClient();
   const body = await request.json();
   const receta = await prisma.recetas.create({
     data: {

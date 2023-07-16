@@ -1,12 +1,14 @@
 import Editor from '@/components/Editor';
 import { prisma } from '@/prismaClient';
+import { currentUser, useAuth } from '@clerk/nextjs';
 export default function page() {
   async function addRecipe(data: any) {
     'use server';
+    const user = await currentUser();
     const newData = Object.fromEntries(data.entries());
-    console.log(newData);
     const nuevaReceta = await prisma.recetas.create({
       data: {
+        userId: user!.id,
         alergenos: newData.alergenos,
         descripcion: newData.editor,
         ingredientes: newData.ingredientes,
