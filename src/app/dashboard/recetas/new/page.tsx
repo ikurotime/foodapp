@@ -1,8 +1,7 @@
 import Editor from '@/components/Editor';
 import { prisma } from '@/prismaClient';
-import { currentUser, useAuth } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
-import { NextResponse } from 'next/server';
 export default function page() {
   async function addRecipe(data: any) {
     'use server';
@@ -15,6 +14,7 @@ export default function page() {
         content: newData.editor,
         ingredientes: newData.ingredientes,
         nombre: newData.Titulo,
+        portraitImage: newData.image_url,
         tiempoPreparacion: Number(newData.tiempoPreparacion),
       },
     });
@@ -24,10 +24,7 @@ export default function page() {
   return (
     <div className='flex min-h-screen w-full  flex-col'>
       <div className='m-auto flex h-[90vh] w-full max-w-6xl rounded-lg bg-white p-8'>
-        <form
-          action={addRecipe as unknown as string}
-          className='flex w-full flex-col gap-3'
-        >
+        <form action={addRecipe} className='flex w-full flex-col gap-3'>
           <label>Titulo de la receta</label>
           <input
             placeholder='Mi deliciosa receta'
@@ -40,6 +37,13 @@ export default function page() {
             placeholder='Esta receta es de mis favoritas....'
             className='rounded-md border-2 border-black  p-3'
             name='descripcion'
+            type='text'
+          />
+          <label>URL de imagen</label>
+          <input
+            placeholder='https://miimagen.com'
+            className='rounded-md border-2 border-black  p-3'
+            name='image_url'
             type='text'
           />
           <label>Contenido</label>

@@ -12,12 +12,14 @@ export default function Header() {
           <HeaderLogo />
         </Link>
         <div className='flex h-full items-center gap-4'>
-          <Link
-            className='flex items-center rounded-md bg-[#F5835E] px-5 py-2 text-center text-white'
-            href='/dashboard/recetas/new'
-          >
-            Crear Receta
-          </Link>
+          {isSignedIn && (
+            <Link
+              className='flex items-center rounded-md bg-[#F5835E] px-5 py-2 text-center text-white'
+              href='/dashboard/recetas/new'
+            >
+              Crear Receta
+            </Link>
+          )}
           <UserButton afterSignOutUrl='/' />
         </div>
       </div>

@@ -1,9 +1,12 @@
 import CommentSection from '@/components/CommentSection';
+import LikesButton from '@/components/LikesButton';
 import Recipe from '@/components/Recipe';
 import { prisma } from '@/prismaClient';
 import { getAllRecipes, getRecipeDataAndComments } from '@/utils';
 import { currentUser } from '@clerk/nextjs';
 import MarkdownIt from 'markdown-it';
+import { revalidatePath } from 'next/cache';
+import Link from 'next/link';
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const recipeId = Number(params.slug);
@@ -12,18 +15,46 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const md = new MarkdownIt();
   const user = await currentUser();
   async function handleLike() {
-    await prisma.likes.create({
-      data: {
-        recetaId: recipeId,
-        userId: user?.id,
-      },
-    });
+    'use server';
+    try {
+      const likeExists = await prisma.likes.findFirst({
+        where: {
+          recetaId: recipeId,
+          userId: user?.id,
+        },
+      });
+      if (likeExists) {
+        await prisma.likes.delete({
+          where: {
+            id: likeExists.id,
+          },
+        });
+        revalidatePath(`/dashboard/recetas/${recipeId}`);
+      } else {
+        await prisma.likes.create({
+          data: {
+            recetaId: recipeId,
+            userId: user?.id,
+          },
+        });
+        revalidatePath(`/dashboard/recetas/${recipeId}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div className='flex min-h-screen items-center justify-center gap-3'>
       <div className='sticky top-24 flex flex-col gap-5 self-start'>
-        <span>❤️: {data?._count.Likes}</span>
-        <span>💬: {data?._count.comentarios}</span>
+        <form action={handleLike}>
+          <LikesButton likes={data?._count.Likes || 0} />
+        </form>
+        <Link
+          href='#comments'
+          className='scroll transition-transform hover:scale-125 hover:cursor-pointer'
+        >
+          💬: {data?._count.comentarios}
+        </Link>
       </div>
 
       <div className='flex max-w-xl flex-1 flex-col gap-5 self-start'>

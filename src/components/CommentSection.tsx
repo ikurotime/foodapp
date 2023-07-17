@@ -1,7 +1,8 @@
 import { prisma } from '@/prismaClient';
 import { getRecipeDataAndComments } from '@/utils';
 import { currentUser } from '@clerk/nextjs';
-import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
+import SendCommentButton from './SendCommentButton';
 
 type Props = {
   post: Awaited<ReturnType<typeof getRecipeDataAndComments>>;
@@ -20,18 +21,21 @@ export default function CommentSection({ post, recipeId }: Props) {
         recetaId: recipeId,
       },
     });
-    redirect(`/dashboard/recetas/${recipeId}`);
+    revalidatePath(`/dashboard/recetas/${recipeId}`);
   }
 
   return (
-    <div className='flex flex-col gap-5 py-5'>
+    <div id='comments' className='flex flex-col gap-5 py-5'>
       <span>Comentarios:</span>
-      <form action={comment as unknown as string}>
-        <input
-          className='w-full rounded-md border border-slate-900 p-2'
-          name='comment'
-          type='text'
-        />
+      <form className='flex w-full' action={comment as unknown as string}>
+        <div className='flex w-full'>
+          <input
+            className='w-full rounded-md border border-slate-900 p-2'
+            name='comment'
+            type='text'
+          />
+        </div>
+        <SendCommentButton />
       </form>
       {post?.comentarios
         ?.sort((a, b) => b.created_at.getTime() - a.created_at.getTime())

@@ -61,11 +61,12 @@ model Recetas {
 
 model Likes {
   id       Int      @id @default(autoincrement())
-  userId   String?
+  userId   String?  
   recetaId Int?
   user     User?    @relation(fields: [userId], references: [id])
   receta   Recetas? @relation(fields: [recetaId], references: [id])
 
   @@index([userId])
   @@index([recetaId])
+  @@unique([userId, recetaId])
 }

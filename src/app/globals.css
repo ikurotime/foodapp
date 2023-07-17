@@ -15,6 +15,7 @@ body {
   color: rgb(var(--foreground-rgb));
   background-color: #fff9f4;
   opacity: 1;
+  scroll-behavior: smooth;
 }
 
 div[class^='cl-footer'] + div {

@@ -10,9 +10,10 @@ export default function Recipe({ recipe }: Props) {
       href={`/dashboard/recetas/${recipe.id}`}
       className='flex min-h-[150px] min-w-[350px] items-center rounded-md border bg-cream p-5 text-xl'
     >
-      <div className='margin-auto flex w-full flex-row'>
-        <div className=' flex min-w-[30%] items-center justify-center'>
+      <div className='margin-auto flex w-full flex-row gap-3'>
+        <div className=' flex min-w-[30%] items-center justify-center '>
           <Image
+            className='aspect-square w-full rounded-md object-cover lg:h-full'
             width={70}
             height={70}
             src={recipe.portraitImage || ''}
@@ -25,7 +26,7 @@ export default function Recipe({ recipe }: Props) {
             <p className='text-[#A5A5A5]'>@{recipe.user?.username}</p>
           </div>
           <span>{recipe.descripcion}</span>
-          <div className='flex justify-between gap-3 text-2xl'>
+          <div className='mt-auto flex justify-between gap-3 self-end text-2xl'>
             <span>🕓:{recipe.tiempoPreparacion}</span>
             <span> ❤️:{recipe._count.Likes}</span>
 
